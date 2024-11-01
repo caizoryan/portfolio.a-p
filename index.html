@@ -5,6 +5,8 @@
 	<title>Aaryan Pashine</title>
 
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 		* {
 			margin: 0;
 			padding: 0;
@@ -14,23 +16,36 @@
 			--bg: #f1f1f1;
 		}
 
+		body {
+			font-size: .9em;
+			font-family: "Roboto Mono";
+		}
+
 		.mother {
 			width: 100vw;
 			height: 100vh;
 			display: grid;
-			grid-template-columns: 1fr 3fr;
+			grid-template-columns: 3fr 7fr;
 			overflow: hidden;
+		}
+
+		@media only screen and (max-width: 800px) {
+			.mother {
+				grid-template-rows: 1fr 2fr;
+				grid-template-columns: 1fr;
+			}
 		}
 
 		.sidebar {
 			padding: 1em;
 		}
 
-		.display {
+		.display-container {
 			background-color: var(--bg);
 			padding: 1em;
 			overflow-y: scroll;
 			height: 100vh;
+			padding-bottom: 5em;
 		}
 
 		.sidebar a {
@@ -42,11 +57,42 @@
 			padding: 1em;
 		}
 
-		img.display {
+
+		.pointer {
+			cursor: crosshair;
+		}
+
+		.pointer:hover {
+			background-color: #f1f1f1;
+		}
+
+
+		.display {
 			padding: 1% 4%;
-			max-height: 90%;
+			height: auto;
+			width: auto;
 			max-width: 90%;
-			object-fit: contain;
+			max-height: 95vh;
+		}
+
+		.text.display {
+			font-weight: 600;
+			max-width: 80%;
+			padding-bottom: 2em;
+			font-family: "Roboto";
+		}
+
+		a {
+			color: #FFCE00;
+			text-decoration: none;
+		}
+
+		a:hover {
+			opacity: .7;
+		}
+
+		p {
+			padding-bottom: .5em;
 		}
 
 		img.thumb {

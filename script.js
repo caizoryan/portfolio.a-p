@@ -1,8 +1,10 @@
 import { mem, render, html, sig } from "./solid_monke/solid_monke.js"
 import { data } from "./data.js"
+import { MD } from "./md.js"
 
 let projects = data.projects
 projects = projects.map((p) => ({ ...p, title: p.title.replace("✱", "") }))
+projects = projects.map((p) => ({ ...p, contents: p.contents.sort((a, b) => b.position - a.position) }))
 
 let all_images = data.projects.reduce((acc, project) => {
 	let filtered = project.contents.filter((c) => c.class == "Image")
@@ -40,7 +42,7 @@ function project_title(p) {
 	let style = () => selected() ? "font-weight: bold" : ""
 	let onmouseenter = () => hovered_slug.set(p.slug)
 	let onclick = () => selected_slug.set(p.slug)
-	return html`li [style=${style} onclick=${onclick} onmouseenter=${onmouseenter}] -- ${p.title}`
+	return html`li.pointer [style=${style} onclick=${onclick} onmouseenter=${onmouseenter}] -- ${p.title}`
 }
 
 function Display() {
@@ -49,17 +51,33 @@ function Display() {
 
 	let displayer = mem(() => {
 		if (none_selected()) return html`each of ${all_images} as ${ImageThumb}`
-		else return html`each of ${selected_project().contents} as ${ImageDisplay}`
+		else return html`each of ${selected_project().contents} as ${DisplayBlocks}`
 	})
 
 	return html`div -- ${displayer}`
 }
 
+function DisplayBlocks(block) {
+	if (block.class === "Image") return ImageDisplay(block)
+	if (block.class === "Text") return TextDisplay(block)
+	if (block.class === "Attachment") return AttachmentDisplay(block)
+}
+
+function AttachmentDisplay(att) {
+	if (att.attachment.extension === "mp4") {
+		return html`video.display [src=${att.attachment.url} autoplay=true loop=true]`
+	}
+}
+
+function TextDisplay(text) {
+	if (text.class !== "Text") return html``
+	return html`.text.display -- ${MD(text.content)}`
+}
+
 function ImageDisplay(img) {
 	if (img.class !== "Image") return html``
-	return html`
-		img.display [src=${img.image.display.url}]
-	`
+
+	return html`img.display [src=${img.image.display.url}]`
 }
 
 function ImageThumb(img) {
@@ -69,7 +87,6 @@ function ImageThumb(img) {
 	let style = () => selected() ? "filter: none" : " filter: grayscale(100%); "
 	let onmouseenter = () => hovered_slug.set(img.parent_slug)
 
-
 	return html`img.thumb [onclick=${onclick} onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
 
 }
@@ -78,7 +95,7 @@ function Mother() {
 	return html`
 		.mother
 			.sidebar -- ${SideBar}
-			.display -- ${Display}
+			.display-container -- ${Display}
 	`
 }
 
