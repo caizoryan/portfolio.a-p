@@ -1,10 +1,17 @@
-import { render, html } from "./solid_monke/solid_monke.js"
+import { mem, render, html, sig } from "./solid_monke/solid_monke.js"
 import { data } from "./data.js"
 
 let projects = data.projects
+
 let all_images = data.projects.reduce((acc, project) => {
-	return acc.concat(project.contents.filter((c) => c.class == "Image"))
+	let filtered = project.contents.filter((c) => c.class == "Image")
+	filtered = filtered.map((c) => ({ ...c, parent_slug: project.slug }))
+	return acc.concat(filtered)
 }, [])
+let shuffle = (arr) => arr.sort(() => Math.random() - 0.5)
+all_images = shuffle(all_images)
+
+let hovered_slug = sig("")
 
 function SideBar() {
 	let title = "Aaryan Pashine is a designer and coder based in Toronto, Canada."
@@ -21,12 +28,16 @@ function SideBar() {
 			p -- ${current}
 			p -- ${Object.entries(links).map(([key, value]) => html` a [href=${value}] -- ${key} `)} 
 			.project-list
-				each of ${projects} as ${project_title}
+				ol
+					each of ${projects} as ${project_title}
 			`
 }
 
 function project_title(p) {
-	return html`p -- ${p.title}`
+	let selected = mem(() => hovered_slug() === p.slug)
+	let style = () => selected() ? "font-weight: bold" : ""
+	let onmouseenter = () => hovered_slug.set(p.slug)
+	return html`li [style=${style} onmouseenter=${onmouseenter}] -- ${p.title}`
 }
 
 function Display() {
@@ -36,8 +47,12 @@ function Display() {
 }
 
 function ImageThumb(img) {
+	let selected = mem(() => hovered_slug() === img.parent_slug)
+	let style = () => selected() ? "filter: none" : " filter: grayscale(100%); "
+	let onmouseenter = () => hovered_slug.set(img.parent_slug)
 
-	return html`img [src=${img.image.thumb.url}]`
+
+	return html`img [onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
 
 }
 
