@@ -10,17 +10,27 @@
 			padding: 0;
 		}
 
+		:root {
+			--bg: #f1f1f1;
+		}
+
 		.mother {
 			width: 100vw;
 			height: 100vh;
 			display: grid;
 			grid-template-columns: 1fr 3fr;
+			overflow: hidden;
 		}
 
-		.sidebar,
-		.display {
+		.sidebar {
 			padding: 1em;
-			border: 1px solid black;
+		}
+
+		.display {
+			background-color: var(--bg);
+			padding: 1em;
+			overflow-y: scroll;
+			height: 100vh;
 		}
 
 		.sidebar a {
@@ -32,8 +42,16 @@
 			padding: 1em;
 		}
 
-		img {
-			width: 100px;
+		img.display {
+			padding: 1% 4%;
+			max-height: 90%;
+			max-width: 90%;
+			object-fit: contain;
+		}
+
+		img.thumb {
+			height: 12.5vh;
+			padding: .2em;
 		}
 	</style>
 

@@ -31,6 +31,6 @@ await Bun.write(
 // -------------------------
 // UTILS
 async function get_channel(id) {
-	let project = await fetch(host + "channels/" + id + "?per=100").then((res) => res.json());
+	let project = await fetch(host + "channels/" + id + "?per=100" + force).then((res) => res.json());
 	return project;
 }

@@ -2,6 +2,7 @@ import { mem, render, html, sig } from "./solid_monke/solid_monke.js"
 import { data } from "./data.js"
 
 let projects = data.projects
+projects = projects.map((p) => ({ ...p, title: p.title.replace("✱", "") }))
 
 let all_images = data.projects.reduce((acc, project) => {
 	let filtered = project.contents.filter((c) => c.class == "Image")
@@ -12,6 +13,7 @@ let shuffle = (arr) => arr.sort(() => Math.random() - 0.5)
 all_images = shuffle(all_images)
 
 let hovered_slug = sig("")
+let selected_slug = sig("")
 
 function SideBar() {
 	let title = "Aaryan Pashine is a designer and coder based in Toronto, Canada."
@@ -37,22 +39,38 @@ function project_title(p) {
 	let selected = mem(() => hovered_slug() === p.slug)
 	let style = () => selected() ? "font-weight: bold" : ""
 	let onmouseenter = () => hovered_slug.set(p.slug)
-	return html`li [style=${style} onmouseenter=${onmouseenter}] -- ${p.title}`
+	let onclick = () => selected_slug.set(p.slug)
+	return html`li [style=${style} onclick=${onclick} onmouseenter=${onmouseenter}] -- ${p.title}`
 }
 
 function Display() {
+	let none_selected = mem(() => selected_slug() === "")
+	let selected_project = mem(() => projects.find((p) => p.slug === selected_slug()))
+
+	let displayer = mem(() => {
+		if (none_selected()) return html`each of ${all_images} as ${ImageThumb}`
+		else return html`each of ${selected_project().contents} as ${ImageDisplay}`
+	})
+
+	return html`div -- ${displayer}`
+}
+
+function ImageDisplay(img) {
+	if (img.class !== "Image") return html``
 	return html`
-		each of ${all_images} as ${ImageThumb}
-`
+		img.display [src=${img.image.display.url}]
+	`
 }
 
 function ImageThumb(img) {
 	let selected = mem(() => hovered_slug() === img.parent_slug)
+
+	let onclick = () => selected_slug.set(img.parent_slug)
 	let style = () => selected() ? "filter: none" : " filter: grayscale(100%); "
 	let onmouseenter = () => hovered_slug.set(img.parent_slug)
 
 
-	return html`img [onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
+	return html`img.thumb [onclick=${onclick} onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
 
 }
 
