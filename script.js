@@ -1,6 +1,7 @@
-import { mem, render, html, sig } from "./solid_monke/solid_monke.js"
+import { mem, render, html, sig, mounted } from "./solid_monke/solid_monke.js"
 import { data } from "./data.js"
 import { MD } from "./md.js"
+import { drag } from "./drag.js"
 
 let projects = data.projects
 projects = projects.map((p) => ({ ...p, title: p.title.replace("✱", "") }))
@@ -17,6 +18,12 @@ all_images = shuffle(all_images)
 let hovered_slug = sig("")
 let selected_slug = sig("")
 
+let sidebar_hidden = sig(false)
+let sidebar_style = mem(() => {
+	if (sidebar_hidden()) return "width: 5em; height: 2em"
+	else return ""
+})
+
 function SideBar() {
 	let title = "Aaryan Pashine is a designer and coder based in Toronto, Canada."
 	let links = {
@@ -26,14 +33,19 @@ function SideBar() {
 	}
 
 	let current = "Currently pursuing a BFA in Graphic Design at OCAD U"
+	let button = mem(() => sidebar_hidden() ? "Menu" : "[ x ]")
+	let showing = mem(() => !sidebar_hidden())
 
 	return html`
+			span.close [onclick=${() => sidebar_hidden.set(!sidebar_hidden())}] -- ${button}
+			when ${showing} then ${html`
 			h4 -- ${title}
 			p -- ${current}
 			p -- ${Object.entries(links).map(([key, value]) => html` a [href=${value}] -- ${key} `)} 
 			.project-list
 				ol
 					each of ${projects} as ${project_title}
+			`}
 			`
 }
 
@@ -47,14 +59,24 @@ function project_title(p) {
 
 function Display() {
 	let none_selected = mem(() => selected_slug() === "")
+
+	return html`
+		when ${none_selected} then ${html`each of ${all_images} as ${ImageThumb}`}
+		when ${selected_slug} then ${DisplayProject}
+	`
+}
+
+function DisplayProject() {
 	let selected_project = mem(() => projects.find((p) => p.slug === selected_slug()))
+	let texts = mem(() => selected_project().contents.filter((c) => c.class === "Text"))
+	let images = mem(() => selected_project().contents.filter((c) => c.class === "Image" || c.class === "Attachment"))
 
-	let displayer = mem(() => {
-		if (none_selected()) return html`each of ${all_images} as ${ImageThumb}`
-		else return html`each of ${selected_project().contents} as ${DisplayBlocks}`
-	})
-
-	return html`div -- ${displayer}`
+	return html`
+	.project-display
+		.text-container
+			each of ${texts} as ${TextDisplay}
+		.image-container
+			each of ${images} as ${DisplayBlocks}`
 }
 
 function DisplayBlocks(block) {
@@ -92,9 +114,12 @@ function ImageThumb(img) {
 }
 
 function Mother() {
+	mounted(() => {
+		drag(document.querySelector(".sidebar"), {})
+	})
 	return html`
 		.mother
-			.sidebar -- ${SideBar}
+			.sidebar [style=${sidebar_style}] -- ${SideBar}
 			.display-container -- ${Display}
 	`
 }

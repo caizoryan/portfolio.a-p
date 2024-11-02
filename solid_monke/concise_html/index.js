@@ -74,6 +74,7 @@ function converAstToHyperscript(ast) {
             if (!w || !t)
                 throw new Error("Invalid when block");
             let e = () => if_then({ if: w.value, then: t.value });
+            ret.push(e);
         }
         else {
             ret.push(hyper(element.tag, element.attrs, children));

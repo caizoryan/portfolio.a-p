@@ -14,6 +14,7 @@
 
 		:root {
 			--bg: #f1f1f1;
+			--link: #ff0;
 		}
 
 		body {
@@ -24,8 +25,8 @@
 		.mother {
 			width: 100vw;
 			height: 100vh;
-			display: grid;
-			grid-template-columns: 3fr 7fr;
+			/* display: grid; */
+			/* grid-template-columns: 3fr 7fr; */
 			overflow: hidden;
 		}
 
@@ -37,6 +38,17 @@
 		}
 
 		.sidebar {
+			position: fixed;
+			top: 5vh;
+			left: 5vh;
+			width: 20vw;
+			max-height: 90vh;
+			opacity: .9;
+			/* overflow-y: scroll; */
+			z-index: 10;
+			background-color: black;
+			color: white;
+
 			padding: 1em;
 		}
 
@@ -44,8 +56,12 @@
 			background-color: var(--bg);
 			padding: 1em;
 			overflow-y: scroll;
+			width: 100vw;
 			height: 100vh;
-			padding-bottom: 5em;
+		}
+
+		.display-container :nth-last-child(1) {
+			padding-bottom: 2em;
 		}
 
 		.sidebar a {
@@ -64,26 +80,36 @@
 
 		.pointer:hover {
 			background-color: #f1f1f1;
+			color: black;
 		}
 
 
 		.display {
-			padding: 1% 4%;
-			height: auto;
-			width: auto;
+			padding: 1% 1%;
 			max-width: 90%;
-			max-height: 95vh;
+			max-height: 35vh;
+		}
+
+		.text-container {
+			width: 100%;
+		}
+
+
+		.image-container {}
+
+		.project-display {
+			display: grid;
+			grid-template-columns: 1fr 3fr;
 		}
 
 		.text.display {
-			font-weight: 600;
 			max-width: 80%;
 			padding-bottom: 2em;
-			font-family: "Roboto";
+			font-family: sans-serif;
 		}
 
 		a {
-			color: #FFCE00;
+			color: var(--link);
 			text-decoration: none;
 		}
 
@@ -97,6 +123,7 @@
 
 		img.thumb {
 			height: 12.5vh;
+			height: 25vh;
 			padding: .2em;
 		}
 	</style>
