@@ -18,7 +18,7 @@
 		}
 
 		body {
-			font-size: .9em;
+			font-size: 1em;
 			font-family: "Roboto Mono";
 		}
 
@@ -35,13 +35,13 @@
 			position: fixed;
 			left: 0;
 			bottom: 0;
+
 			width: 20vw;
 			min-width: 400px;
 			max-height: 90vh;
 			z-index: 10;
 			background-color: black;
 			color: white;
-
 			padding: 1em;
 		}
 
@@ -80,7 +80,7 @@
 		.display {
 			padding: 1em 1em;
 			max-width: 90%;
-			max-height: 35vh;
+			max-height: 45vh;
 		}
 
 		.text-container {
@@ -151,8 +151,44 @@
 
 		img.thumb {
 			height: 12.5vh;
-			height: 25vh;
+			/* height: 25vh; */
 			padding: .2em;
+		}
+
+		.float_1 {
+			animation: float_1 15s ease-in-out infinite;
+		}
+
+		.float_2 {
+			animation: float_2 15s ease-in-out infinite;
+		}
+
+		@keyframes float_1 {
+			0% {
+				transform: translateY(0);
+			}
+
+			50% {
+				transform: translateY(-10px);
+			}
+
+			100% {
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes float_2 {
+			0% {
+				transform: translateY(0);
+			}
+
+			50% {
+				transform: translateY(10px);
+			}
+
+			100% {
+				transform: translateY(0);
+			}
 		}
 
 		@media only screen and (max-width: 800px) {

@@ -117,12 +117,13 @@ function ImageDisplay(img) {
 
 function ImageThumb(img) {
 	let selected = mem(() => hovered_slug() === img.parent_slug)
+	let float = () => Math.random() > 0.5 ? "thumb float_1" : "thumb float_2"
 
 	let onclick = () => selected_slug.set(img.parent_slug)
 	let style = () => selected() ? "filter: none" : " filter: grayscale(100%); "
 	let onmouseenter = () => hovered_slug.set(img.parent_slug)
 
-	return html`img.thumb [onclick=${onclick} onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
+	return html`img [class=${float} onclick=${onclick} onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
 
 }
 
