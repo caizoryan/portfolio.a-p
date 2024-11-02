@@ -30,21 +30,14 @@
 			overflow: hidden;
 		}
 
-		@media only screen and (max-width: 800px) {
-			.mother {
-				grid-template-rows: 1fr 2fr;
-				grid-template-columns: 1fr;
-			}
-		}
 
 		.sidebar {
 			position: fixed;
 			top: 5vh;
 			left: 5vh;
 			width: 20vw;
+			min-width: 400px;
 			max-height: 90vh;
-			opacity: .9;
-			/* overflow-y: scroll; */
 			z-index: 10;
 			background-color: black;
 			color: white;
@@ -85,7 +78,7 @@
 
 
 		.display {
-			padding: 1% 1%;
+			padding: 1em 1em;
 			max-width: 90%;
 			max-height: 35vh;
 		}
@@ -94,8 +87,10 @@
 			width: 100%;
 		}
 
-
-		.image-container {}
+		.image-container {
+			height: 100vh;
+			overflow-y: scroll;
+		}
 
 		.project-display {
 			display: grid;
@@ -121,10 +116,22 @@
 			padding-bottom: .5em;
 		}
 
+		.sidebar .hidden {
+			width: auto;
+			height: 2em;
+		}
+
 		img.thumb {
 			height: 12.5vh;
 			height: 25vh;
 			padding: .2em;
+		}
+
+		@media only screen and (max-width: 800px) {
+			.project-display {
+				grid-template-rows: 1.5fr 4fr;
+				grid-template-columns: 1fr;
+			}
 		}
 	</style>
 

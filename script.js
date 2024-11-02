@@ -19,9 +19,9 @@ let hovered_slug = sig("")
 let selected_slug = sig("")
 
 let sidebar_hidden = sig(false)
-let sidebar_style = mem(() => {
-	if (sidebar_hidden()) return "width: 5em; height: 2em"
-	else return ""
+let sidebar_class = mem(() => {
+	if (sidebar_hidden()) return "sidebar hidden"
+	else return "sidebar"
 })
 
 function SideBar() {
@@ -119,7 +119,7 @@ function Mother() {
 	})
 	return html`
 		.mother
-			.sidebar [style=${sidebar_style}] -- ${SideBar}
+			div [class=${sidebar_class}] -- ${SideBar}
 			.display-container -- ${Display}
 	`
 }
