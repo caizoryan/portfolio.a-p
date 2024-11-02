@@ -79,6 +79,7 @@ function DisplayProject() {
 	let selected_project = mem(() => projects.find((p) => p.slug === selected_slug()))
 	let texts = mem(() => selected_project().contents.filter((c) => c.class === "Text"))
 	let images = mem(() => selected_project().contents.filter((c) => c.class === "Image" || c.class === "Attachment"))
+	let links = mem(() => selected_project().contents.filter((c) => c.class === "Link"))
 	let image_selected = mem(() => selected_image() !== "")
 
 	return html`
@@ -88,6 +89,7 @@ function DisplayProject() {
 		.text-container
 			.close.back.pointer [onclick=${() => selected_slug.set("")}] -- [ back ] 
 			each of ${texts} as ${TextDisplay}
+			each of ${links} as ${LinkDisplay}
 		.image-container
 			each of ${images} as ${DisplayBlocks}`
 }
@@ -108,6 +110,14 @@ function TextDisplay(text) {
 	if (text.class !== "Text") return html``
 	return html`
 		.text.display -- ${MD(text.content)}`
+}
+
+function LinkDisplay(text) {
+	let title = text.title
+	let url = text.source.url
+	return html`
+		.link.display
+			a [href=${url}] -- ${title}`
 }
 
 function ImageDisplay(img) {

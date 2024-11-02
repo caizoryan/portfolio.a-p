@@ -111,6 +111,12 @@
 			font-family: sans-serif;
 		}
 
+		.link.display {
+			max-width: 80%;
+			padding-bottom: 2em;
+			font-size: 2em;
+		}
+
 		a {
 			color: var(--link);
 			text-decoration: none;
@@ -177,15 +183,15 @@
 
 		@keyframes float_1 {
 			0% {
-				transform: translateY(0);
+				transform: translate3D(0, 0, 0);
 			}
 
 			50% {
-				transform: translateY(-10px);
+				transform: translate3D(0, -10px, 0);
 			}
 
 			100% {
-				transform: translateY(0);
+				transform: translate3D(0, 0, 0);
 			}
 		}
 
