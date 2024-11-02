@@ -127,9 +127,9 @@ function ImageThumb(img) {
 }
 
 function Mother() {
-	mounted(() => {
-		drag(document.querySelector(".sidebar"), {})
-	})
+	// mounted(() => {
+	// 	drag(document.querySelector(".sidebar"), {})
+	// })
 	return html`
 		.mother
 			div [class=${sidebar_class}] -- ${SideBar}
