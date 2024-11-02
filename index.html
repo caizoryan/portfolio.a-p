@@ -193,13 +193,21 @@
 			animation: float_2 55s infinite;
 		}
 
+		.float_3 {
+			animation: float_3 55s infinite;
+		}
+
+		.float_4 {
+			animation: float_4 55s infinite;
+		}
+
 		@keyframes float_1 {
 			0% {
 				transform: translate3D(0, 0, -35px);
 			}
 
 			50% {
-				transform: translate3D(0, -35px, 0);
+				transform: translate3D(-35px, 0, 0);
 			}
 
 			100% {
@@ -213,11 +221,39 @@
 			}
 
 			50% {
+				transform: translate3D(35px, 0, 0);
+			}
+
+			100% {
+				transform: translate3D(0, 0, 35px);
+			}
+		}
+
+		@keyframes float_3 {
+			0% {
+				transform: translate3D(0, 0, 35px);
+			}
+
+			50% {
 				transform: translate3D(0, 35px, 0);
 			}
 
 			100% {
 				transform: translate3D(0, 0, 35px);
+			}
+		}
+
+		@keyframes float_4 {
+			0% {
+				transform: translate3D(0, 0, -35px);
+			}
+
+			50% {
+				transform: translate3D(0, -35px, 0);
+			}
+
+			100% {
+				transform: translate3D(0, 0, -35px);
 			}
 		}
 

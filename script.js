@@ -131,7 +131,7 @@ function ImageDisplay(img) {
 function ImageThumb(img) {
 	let selected = mem(() => hovered_slug() === img.parent_slug)
 	let float = () => {
-		let options = ["thumb float_1", "thumb float_2", "thumb"]
+		let options = ["thumb float_1", "thumb float_2", "thumb float_3", "thumb float_4", "thumb"]
 		return options[Math.floor(Math.random() * options.length)]
 	}
 
