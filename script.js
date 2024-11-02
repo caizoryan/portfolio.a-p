@@ -70,7 +70,7 @@ function Display() {
 function DisplayLargeImage() {
 	return html`
 	.large-image
-		.close.pointer [onclick=${() => selected_image.set("")}] -- x
+		.close.largj.pointer [onclick=${() => selected_image.set("")}] -- x
 		img.large [src=${selected_image()}]
 	`
 }
@@ -86,6 +86,7 @@ function DisplayProject() {
 	.project-display 
 		when ${image_selected} then ${DisplayLargeImage}
 		.text-container
+			.close.back.pointer [onclick=${() => selected_slug.set("")}] -- [ back ] 
 			each of ${texts} as ${TextDisplay}
 		.image-container
 			each of ${images} as ${DisplayBlocks}`
@@ -105,7 +106,8 @@ function AttachmentDisplay(att) {
 
 function TextDisplay(text) {
 	if (text.class !== "Text") return html``
-	return html`.text.display -- ${MD(text.content)}`
+	return html`
+		.text.display -- ${MD(text.content)}`
 }
 
 function ImageDisplay(img) {

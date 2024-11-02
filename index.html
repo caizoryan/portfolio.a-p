@@ -14,6 +14,7 @@
 
 		:root {
 			--bg: #f1f1f1;
+			--bg-dark: #e1e1e1;
 			--link: #ff0;
 		}
 
@@ -47,15 +48,11 @@
 
 		.display-container {
 			background-color: var(--bg);
-			padding: 1em;
 			overflow-y: scroll;
 			width: 100vw;
 			height: 100vh;
 		}
 
-		.display-container :nth-last-child(1) {
-			padding-bottom: 2em;
-		}
 
 		.sidebar a {
 			padding-right: .5em;
@@ -80,11 +77,16 @@
 		.display {
 			padding: 1em 1em;
 			max-width: 90%;
-			max-height: 45vh;
+			max-height: 40vh;
+		}
+
+		img.display {
+			cursor: pointer;
 		}
 
 		.text-container {
 			width: 100%;
+			background-color: var(--bg-dark);
 		}
 
 		.text-container :nth-child(1) {
@@ -99,6 +101,8 @@
 		.project-display {
 			display: grid;
 			grid-template-columns: 1fr 3fr;
+			height: 100vh;
+			overflow: hidden;
 		}
 
 		.text.display {
@@ -130,11 +134,19 @@
 			height: 100vh;
 		}
 
+
+		.close.back {
+			font-size: 1em;
+			padding: 1em;
+			color: yellow;
+		}
+
 		.large-image .close {
 			position: fixed;
 			top: 1em;
 			left: 1em;
 			font-size: 2em;
+			color: black;
 		}
 
 		img.large {
