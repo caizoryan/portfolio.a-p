@@ -54,7 +54,7 @@ function project_title(p) {
 	let selected = mem(() => hovered_slug() === p.slug)
 	let style = () => selected() ? "font-weight: bold" : ""
 	let onmouseenter = () => hovered_slug.set(p.slug)
-	let onclick = () => selected_slug.set(p.slug)
+	let onclick = () => { selected_slug.set(p.slug); selected_image.set("") }
 	return html`li.pointer [style=${style} onclick=${onclick} onmouseenter=${onmouseenter}] -- ${p.title}`
 }
 
