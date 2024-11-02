@@ -17,6 +17,7 @@ all_images = shuffle(all_images)
 
 let hovered_slug = sig("")
 let selected_slug = sig("")
+let selected_image = sig("")
 
 let sidebar_hidden = sig(false)
 let sidebar_class = mem(() => {
@@ -33,11 +34,11 @@ function SideBar() {
 	}
 
 	let current = "Currently pursuing a BFA in Graphic Design at OCAD U"
-	let button = mem(() => sidebar_hidden() ? "Menu" : "[ x ]")
 	let showing = mem(() => !sidebar_hidden())
+	let button = mem(() => showing() ? "[ x ]" : "[ + ]")
 
 	return html`
-			span.close [onclick=${() => sidebar_hidden.set(!sidebar_hidden())}] -- ${button}
+			span.close.pointer [onclick=${() => sidebar_hidden.set(!sidebar_hidden())}] -- ${button()}
 			when ${showing} then ${html`
 			h4 -- ${title}
 			p -- ${current}
@@ -66,13 +67,24 @@ function Display() {
 	`
 }
 
+function DisplayLargeImage() {
+	return html`
+	.large-image
+		.close.pointer [onclick=${() => selected_image.set("")}] -- x
+		img.large [src=${selected_image()}]
+	`
+}
+
 function DisplayProject() {
 	let selected_project = mem(() => projects.find((p) => p.slug === selected_slug()))
 	let texts = mem(() => selected_project().contents.filter((c) => c.class === "Text"))
 	let images = mem(() => selected_project().contents.filter((c) => c.class === "Image" || c.class === "Attachment"))
+	let image_selected = mem(() => selected_image() !== "")
 
 	return html`
-	.project-display
+	
+	.project-display 
+		when ${image_selected} then ${DisplayLargeImage}
 		.text-container
 			each of ${texts} as ${TextDisplay}
 		.image-container
@@ -98,8 +110,9 @@ function TextDisplay(text) {
 
 function ImageDisplay(img) {
 	if (img.class !== "Image") return html``
+	let onclick = () => selected_image.set(img.image.original.url)
 
-	return html`img.display [src=${img.image.display.url}]`
+	return html`img.display [src=${img.image.display.url} onclick=${onclick}]`
 }
 
 function ImageThumb(img) {
