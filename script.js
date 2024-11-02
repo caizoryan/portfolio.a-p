@@ -35,17 +35,18 @@ function SideBar() {
 
 	let current = "Currently pursuing a BFA in Graphic Design at OCAD U"
 	let showing = mem(() => !sidebar_hidden())
-	let button = mem(() => showing() ? "[ x ]" : "[ + ]")
+	let button = mem(() => showing() ? "[ hide ]" : "[ show ]")
 
 	return html`
 			span.close.pointer [onclick=${() => sidebar_hidden.set(!sidebar_hidden())}] -- ${button()}
 			when ${showing} then ${html`
-			h4 -- ${title}
-			p -- ${current}
-			p -- ${Object.entries(links).map(([key, value]) => html` a [href=${value}] -- ${key} `)} 
-			.project-list
-				ol
-					each of ${projects} as ${project_title}
+			.sidebar-content
+				h4 -- ${title}
+				p -- ${current}
+				p -- ${Object.entries(links).map(([key, value]) => html` a [href=${value}] -- ${key} `)} 
+				.project-list
+					ol
+						each of ${projects} as ${project_title}
 			`}
 			`
 }
@@ -129,10 +130,13 @@ function ImageDisplay(img) {
 
 function ImageThumb(img) {
 	let selected = mem(() => hovered_slug() === img.parent_slug)
-	let float = () => Math.random() > 0.5 ? "thumb float_1" : "thumb float_2"
+	let float = () => {
+		let options = ["thumb float_1", "thumb float_2", "thumb"]
+		return options[Math.floor(Math.random() * options.length)]
+	}
 
 	let onclick = () => selected_slug.set(img.parent_slug)
-	let style = () => selected() ? "filter: none" : " filter: grayscale(100%); "
+	let style = () => selected() ? "filter: none;  box-shadow: 0 0 10px 5px rgba(0, 0, 0, .2); " : " filter: grayscale(100%); mix-blend-mode: multiply;"
 	let onmouseenter = () => hovered_slug.set(img.parent_slug)
 
 	return html`img [class=${float} onclick=${onclick} onmouseenter=${onmouseenter} style=${style} src=${img.image.thumb.url}]`
